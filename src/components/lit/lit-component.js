@@ -16,6 +16,7 @@ export class Demo extends LitElement {
   }
 
   render() {
+    console.log(this.config)
     const functions = new LitFunctions(this.shadowRoot)
     return innerHtml(functions)
   }

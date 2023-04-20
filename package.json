@@ -1,10 +1,11 @@
 {
-  "name": "@acl/packtest",
+  "name": "@sdevm/packtest",
+  "version": "1.0.1",
   "dependencies": {
     "lit": "^2.7.2"
   },
   "main": "src/index.js",
-  "author": "aclteam",
+  "author": "SDevM",
   "devDependencies": {
     "webpack": "^5.80.0",
     "webpack-cli": "^5.0.1"
