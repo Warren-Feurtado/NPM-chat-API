@@ -16,7 +16,7 @@ class LitFunctions {
   }
 
   static formOutput = (shadowDom) => (event) => {
-    console.log("Form", event.target.value)
+    shadowDom.querySelector("#hello").textContent = event.target.value
   }
 }
 
