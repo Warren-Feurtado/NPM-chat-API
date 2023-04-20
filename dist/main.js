@@ -10,13 +10,23 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/components/lit/lit-component.functions.js":
+/*!*******************************************************!*\
+  !*** ./src/components/lit/lit-component.functions.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"boom\": () => (/* binding */ boom)\n/* harmony export */ });\nfunction boom(event) {\r\n  console.log(\"What did you expect, an explosion?\")\r\n  console.log(\"Event:\", event)\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack://@acl/packtest/./src/components/lit/lit-component.functions.js?");
+
+/***/ }),
+
 /***/ "./src/components/lit/lit-component.html.js":
 /*!**************************************************!*\
   !*** ./src/components/lit/lit-component.html.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"innerHtml\": () => (/* binding */ innerHtml)\n/* harmony export */ });\n/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ \"./node_modules/lit/index.js\");\n\r\n\r\nconst innerHtml = lit__WEBPACK_IMPORTED_MODULE_0__.html`<p>Hello World!</p>`\r\n\r\n\r\n\n\n//# sourceURL=webpack://@acl/packtest/./src/components/lit/lit-component.html.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"innerHtml\": () => (/* binding */ innerHtml)\n/* harmony export */ });\n/* harmony import */ var lit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lit */ \"./node_modules/lit/index.js\");\n/* harmony import */ var _lit_component_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lit-component.functions */ \"./src/components/lit/lit-component.functions.js\");\n\r\n\r\n\r\nconst innerHtml = lit__WEBPACK_IMPORTED_MODULE_0__.html`<p @click=\"${_lit_component_functions__WEBPACK_IMPORTED_MODULE_1__.boom}\">Hello World!</p>`\r\n\r\n\r\n\n\n//# sourceURL=webpack://@acl/packtest/./src/components/lit/lit-component.html.js?");
 
 /***/ }),
 
