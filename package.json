@@ -1,6 +1,6 @@
 {
   "name": "@sdevm/packtest",
-  "version": "1.0.1",
+  "version": "1.0.1b",
   "dependencies": {
     "lit": "^2.7.2"
   },
