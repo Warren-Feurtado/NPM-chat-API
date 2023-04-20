@@ -1,4 +1,5 @@
 import { LitElement } from "lit"
+import { LitFunctions } from "./lit-component.functions.js"
 import { innerHtml } from "./lit-component.html.js"
 import { style } from "./lit-component.style.js"
 
@@ -15,7 +16,8 @@ export class Demo extends LitElement {
   }
 
   render() {
-    return innerHtml
+    const functions = new LitFunctions(this.shadowRoot)
+    return innerHtml(functions)
   }
 }
 

@@ -1,6 +1,16 @@
-import { html } from "lit"
-import { boom } from "./lit-component.functions"
+import { html, TemplateResult } from "lit"
+import { LitFunctions } from "./lit-component.functions"
 
-const innerHtml = html`<p @click="${boom}">Hello World!</p>`
+const innerHtml =
+  /**
+   * Produces the html template of the component
+   * @param {LitFunctions} litFunctions
+   * @returns {TemplateResult}
+   */
+  (litFunctions) =>
+    html`
+      <p id="hello" @click="${litFunctions.boom}">Hello World!</p>
+      <input @change="${litFunctions.formOutput}" type="text" name="test" />
+    `
 
 export { innerHtml }
