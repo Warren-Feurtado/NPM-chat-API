@@ -11,6 +11,8 @@
     "webpack-cli": "^5.0.1"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "component-builder": "py tools/python/scaffold-component/scaffold-component.py",
+    "cbr": "py tools/python/scaffold-component/scaffold-component.py"
   }
 }
