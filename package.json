@@ -2,7 +2,8 @@
   "name": "@sdevm/packtest",
   "version": "1.0.1b",
   "dependencies": {
-    "lit": "^2.7.2"
+    "lit": "^2.7.3",
+    "socket.io-client": "^4.6.1"
   },
   "main": "src/index.js",
   "author": "SDevM",
