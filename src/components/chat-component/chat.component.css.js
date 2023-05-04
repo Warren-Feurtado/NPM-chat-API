@@ -91,7 +91,7 @@ const style = css `
     /* border: 2px solid orange; */
   }
 
-  .chat_body .msg_list {
+  .chat_body #msg_list {
     width: 100%;
     height: auto;
     color: white;

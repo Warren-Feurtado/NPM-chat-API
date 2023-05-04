@@ -32,7 +32,7 @@ const innerHtml =
         </div>
 
         <div class="chat_body">
-          <div class="msg_list">
+          <div id="msg_list">
           </div>
         </div>
     
