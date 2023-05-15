@@ -3,8 +3,7 @@ import { ChatFunctions } from "./chat.component.functions";
 import { innerHtml } from "./chat.component.html";
 import { style } from "./chat.component.css";
 
-export function chatFactory(services) {
-  return class ChatComponent extends LitElement {
+export class ChatComponent extends LitElement {
     static styles = style;
 
     static properties = {
@@ -18,8 +17,8 @@ export function chatFactory(services) {
 
     render() {
       console.log(this.config);
-      const functions = new ChatFunctions(this.shadowRoot, services);
+      const functions = new ChatFunctions(this.shadowRoot);
       return innerHtml(functions);
     }
   };
-}
+

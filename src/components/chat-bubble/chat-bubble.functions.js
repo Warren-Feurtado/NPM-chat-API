@@ -7,6 +7,7 @@ export class LitFunctions {
   constructor(shadowRoot, services) {
     this.services = services;
     this.chatToggle = this.chatToggle(shadowRoot);
+
   }
 
   chatToggle = (shadowRoot) => (event) => {

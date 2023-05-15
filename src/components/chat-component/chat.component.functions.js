@@ -1,7 +1,19 @@
-export class ChatFunctions {
+import { io } from "socket.io-client";
+import { SOCKETAPI } from "../../environment/env";
 
+export class ChatFunctions {
+  #socket = io(SOCKETAPI); 
   
-   mgsList = []; 
+   newMsgHistory = [];  
+   oldMsgHistory = [];
+   newInMsg = '';
+   newMsgObj;
+  //  aclUD = localStorage.getItem('aclUD');
+   metaData = {
+    id: '',
+     uuID: ''
+   };
+  
 
     /**
      * Constructs the function provider object
@@ -9,13 +21,114 @@ export class ChatFunctions {
      * @param {any} services
      * 
      */
-    constructor(shadowRoot, services) {
-      this.services = services;
-      
+    constructor(shadowRoot) {
+      // this.services = services;
+      // this.newMsgObj = this.services.socketService.msgObj;
+      // console.log("new msgObj in component constructor: ", this.newMsgObj);
       this.chatToggle = this.chatToggle(shadowRoot);
-      this.sendMsg = this.sendMsg(shadowRoot)
-      this.mgList = this.services.socketService.mgsList2
+      this.sendMsg = this.sendMsg(shadowRoot);
+      this.newMsgIn = this.newMsgIn(shadowRoot);
+      this.chatOpen = this.chatOpen(shadowRoot);
+      // this.newMsgOut = this.newMsgOut(this.msg); 
+      
+      this.getMyData();
+      this.newMsgIn();
+        
+       
     }
+
+    getMyData() {
+      let aclUD = localStorage.getItem('aclUD');
+      this.#socket.emit('aclUD', aclUD);
+      
+      this.#socket.on('myData', (myData) => {
+        console.log('here is my metadata from server: ', myData);
+        
+        if(aclUD === null) {
+          console.log('NO aclUD found: ', aclUD);
+          this.metaData = myData;
+          console.log('local storage was empty... setting new metadata: ' , this.metaData); 
+          localStorage.setItem('aclUD', this.metaData.uuID);
+          console.log('new aclUD set in Local storage: ', localStorage.getItem('aclUD'));
+
+          // this.#socket.on('new-convo', (convoData) => {
+          //   console.log('new convo data created', convoData);
+          // })
+          
+        } else {
+          this.metaData = myData;
+          console.log('aclUD already exists: ', aclUD); 
+          console.log('metadata with existing aclUD', this.metaData); 
+
+          // this.#socket.on('convo-history', (convoData) => {
+          //   console.log('user convo found', convoData);
+          // })
+        }
+
+        console.log('current metadata after processing', this.metaData);
+
+      })
+    }
+
+    chatOpen = (shadowRoot) => () => {
+      let sender = localStorage.getItem('aclUD');
+      // convoData.seenBy.push(localStorage.getItem('aclUD'));
+      console.log('Chat window opened by: ', sender);
+
+      this.#socket.emit('chatOpen', sender);
+
+      this.#socket.on('chat-history', (history) => {
+        let msgHistory = shadowRoot.querySelector("#msg_list");
+
+        this.oldMsgHistory = history;
+        console.log('oldMsgHistory', this.oldMsgHistory);
+
+        this.oldMsgHistory.forEach((msg) => {
+          let listItem = document.createElement('p');
+          listItem.textContent = msg.message;
+          msgHistory.appendChild(listItem);
+        })
+      })
+
+      
+    }
+
+
+    newMsgIn = (shadowRoot) => () => {
+    
+      this.#socket.on('new-msg', (data) => {
+        let msgHistory = shadowRoot.querySelector("#msg_list");
+
+
+        console.log("new message in component: ", data);
+        this.newMsgHistory.push(data.message.message);
+        console.log('heres the history', this.newMsgHistory);
+        let listItem = document.createElement('p');
+        listItem.textContent = data.message.message;
+        msgHistory.appendChild(listItem);
+
+
+        // this.newMsgHistory.forEach(msgObject => {
+        //       let listItem = document.createElement('p')
+        //       listItem.textContent = msgObject.message;
+        //   //     console.log('heres the msg object:', msgObject);
+        //   //     console.log('message object.message', msgObject.message);
+        //   //     listItem.textContent = msgObject.message;
+        //   mgsHistory.appendChild(listItem);
+        // });
+        
+      });
+    };
+
+    newMsgOut(msg) {
+      let msgData = {
+        message: msg,
+        // chatID: ''
+      }
+      console.log("message heading for server from component", msgData);
+      this.#socket.emit('new-msg', msgData);
+    }
+
   
     // TOGGLE CHAT WINDOW OPEN AND CLOSE
     chatToggle = (shadowRoot) => () => {
@@ -28,7 +141,7 @@ export class ChatFunctions {
         chatBub.style.display = "none";
         chatWindow.style.display = "block";
         chatWindow.classList.add("chat-open");
-
+        this.chatOpen();
       } 
       else if (chatWindow.classList.contains("chat-open")) {
         chatBub.style.display = "block";
@@ -49,39 +162,28 @@ export class ChatFunctions {
         
         this.msg = shadowRoot.querySelector("#newMsg");
 
-        this.mgsHistory = shadowRoot.querySelector("#msg_list");
+        // this.mgsHistory = shadowRoot.querySelector("#msg_list");
 
+        // let msg_List = shadowRoot.querySelector("#msg_list")
 
         // MESSAGE FIELD VALIDATION
         if(this.msg.value == '') {
           return alert('Please type a message to send!!');
-          
+
         } else {
-          this.services.socketService.newMsgOut(this.msg.value);
-          this.services.socketService.newMsgIn(this.mgsList);
-          
-          // let msgArray = this.services.socketService.newMsgIn(this.mgsList);
-          
-          // this.mgsList.forEach((mgsItem) => {
-          //  let new_Msg = document.createElement('div');
+          this.newMsgOut(this.msg.value);
+          console.log("This is the message being sent: ", this.msg.value);
 
-          //  if (!mgsList.includes(mgsItem)) {
-          //   console.log('new message reached component thru service', data);
-          // }
-
-          //  new_Msg.innerHTML = mgsItem.message
-          // this.mgsHistory.appendChild(new_Msg)
-          // }) 
-
-          console.log("messages reached component level", this.mgsList);
-          console.log("service list checked", this.mgList);
         }
 
-        console.log("This is the message being sent: ", this.msg.value);
         this.msg.value = '';
       };
 
-
-    
+      newUser() {
+        let aclUD = localStorage.getItem('aclUD');
+        console.log("UD before removal",  aclUD)
+        localStorage.removeItem('aclUD');
+        console.log("removed UD", aclUD);
+      }
 }
   
