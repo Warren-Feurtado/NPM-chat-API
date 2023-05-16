@@ -16,14 +16,24 @@ const style = css `
   #chatBub {
     width: 50px;
     height: 50px;
-    background-color: #00f;
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 10px; */
+    background-color: rgba(6, 3, 100);
+    /* color: #fff; */
     border-radius: 50%;
     position: fixed;
     bottom: 10px;
     right: 10px;
     cursor: pointer;
     box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
+    transition: 0.5s ease;
+  }
+
+  #chatBub:hover{ 
+    transform: scale(1.1);
+    box-shadow: 1px 1px 3.5px 2px rgba(0, 0, 0, 0.4);
   }
 
   /* CHAT WINDOW */
@@ -33,10 +43,11 @@ const style = css `
     border-radius: 5px;
     background: #000;
     position: absolute;
-    bottom: 10px;
+    bottom: 80px;
     right: 10px;
     overflow: hidden;
     display: none;
+    /* box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25); */
   }
 
   /* CHAT WINDOW HEAD SECTION */
@@ -185,6 +196,7 @@ const style = css `
     width: 250px;
     /* border: solid 1px black; */
     animation: expandChat 0.3s ease-in;
+    box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
   }
 
   /* CLOSE CHAT CLASS */

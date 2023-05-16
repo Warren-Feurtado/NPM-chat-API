@@ -3,7 +3,10 @@ import { SOCKETAPI } from "../../environment/env";
 
 export class ChatFunctions {
   #socket = io(SOCKETAPI); 
+  #snmsp;
   
+  // domain = window.location.hostname;
+  domain = {domain: 'test.com'};
    newMsgHistory = [];  
    oldMsgHistory = [];
    newInMsg = '';
@@ -31,19 +34,32 @@ export class ChatFunctions {
       this.chatOpen = this.chatOpen(shadowRoot);
       // this.newMsgOut = this.newMsgOut(this.msg); 
       
-      this.getMyData();
+      this.myData();
       this.newMsgIn();
         
        
     }
 
-    getMyData() {
+    myData() {
       let aclUD = localStorage.getItem('aclUD');
+      
+
+      this.#socket.emit('client:connect', this.domain);
+      console.log("here's the domain im connecting from", this.domain);
+
+      this.#socket.on('nsps_id', (data) => {
+        this.#snmsp = io(`${SOCKETAPI}/${data.nsps_id}`);
+        console.log('nsps_id object from server: ', data);
+        console.log('new name space in function: ', this.#snmsp);
+      })
+      console.log('new name space outside function: ', this.#snmsp);
+
+      
+
       this.#socket.emit('aclUD', aclUD);
       
       this.#socket.on('myData', (myData) => {
         console.log('here is my metadata from server: ', myData);
-        
         if(aclUD === null) {
           console.log('NO aclUD found: ', aclUD);
           this.metaData = myData;
@@ -132,26 +148,30 @@ export class ChatFunctions {
   
     // TOGGLE CHAT WINDOW OPEN AND CLOSE
     chatToggle = (shadowRoot) => () => {
-        const chatBub = shadowRoot.querySelector("#chatBub");
+        const closeIcon = shadowRoot.querySelector("#closeIcon");
+        const chatIcon = shadowRoot.querySelector("#chatIcon");
         const chatWindow = shadowRoot.querySelector("#chatWin");
         const newMsg = shadowRoot.querySelector("#newMsg");
     
       if (chatWindow.classList.contains("hide")) {
         chatWindow.classList.remove("hide");
-        chatBub.style.display = "none";
+        chatIcon.style.display = "none";
+        closeIcon.style.display = "block";
         chatWindow.style.display = "block";
         chatWindow.classList.add("chat-open");
         this.chatOpen();
       } 
       else if (chatWindow.classList.contains("chat-open")) {
-        chatBub.style.display = "block";
+        closeIcon.style.display = "none";
+        chatIcon.style.display = "block";
         chatWindow.classList.remove("chat-open");
         chatWindow.classList.add("chat-close");
         console.log(chatWindow.classList);
         newMsg.value = '';
       } 
       else if (chatWindow.classList.contains("chat-close")) {
-        chatBub.style.display = "none";
+        closeIcon.style.display = "block";
+        chatIcon.style.display = "none";
         chatWindow.classList.remove("chat-close");
         chatWindow.classList.add("chat-open");
       }

@@ -23,7 +23,7 @@
 //     //     })
 //     // }
 
-//     // newMsgIn() { 
+//     // newMsgIn(socket) { 
 //     //   let mgsList = [];
 //     //   let newInMsg;
 //     //   this.socket.on('new-msg', (data) => { 
