@@ -46,7 +46,7 @@ export class SocketService {
                 console.log('convo ID on reconnect data: ', reconData.client.conversations[0]._id);
                 
                 this.msgHistory.forEach((msgObj) => {
-                    let msgDisplay = shadowRoot.querySelector('#msg_list');
+                    let msgDisplay = shadowRoot.querySelector('.chat_body');
                     // let listItem = document.createElement('p');
                     if(msgObj.sender === reconData.client._id) {
                         // console.log();

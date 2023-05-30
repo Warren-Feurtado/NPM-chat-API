@@ -31,6 +31,7 @@ export class ChatFunctions {
       closeIcon.style.display = "block";
       chatWindow.style.display = "block";
       chatWindow.classList.add("chat-open");
+      this.#socketService.scrollToBottom(shadowRoot);
       // this.chatOpen();
     } 
     else if (chatWindow.classList.contains("chat-open")) {
@@ -46,6 +47,7 @@ export class ChatFunctions {
       chatIcon.style.display = "none";
       chatWindow.classList.remove("chat-close");
       chatWindow.classList.add("chat-open");
+      this.#socketService.scrollToBottom(shadowRoot);
     }
   };
 
@@ -59,7 +61,7 @@ export class ChatFunctions {
       return alert('Please type a message to send!!');
           
     } else {
-      let msgOutDisplay = shadowRoot.querySelector("#msg_list");
+      let msgOutDisplay = shadowRoot.querySelector(".chat_body");
       console.log('company namespace wen sending messsage: ', this.compNSP)
       // this.#socketService.newMsgOut(this.msg.value, this.convoID, this.compNSP);
       this.#socketService.newMsgOut(this.msg.value);
