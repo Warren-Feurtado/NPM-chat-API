@@ -65,10 +65,37 @@ export class ChatFunctions {
       this.#socketService.newMsgOut(this.msg.value);
       console.log("This is the message being sent: ", this.msg.value);
 
-      let msgEl = document.createElement('p');
-      msgEl.textContent = `Me: ${this.msg.value}`;
-      msgOutDisplay.appendChild(msgEl);
+      // let msgEl = document.createElement('p');
+      // msgEl.textContent = `Me: ${this.msg.value}`;
+      // msgOutDisplay.appendChild(msgEl);
+      let listCon = document.createElement("div");
+      msgOutDisplay.appendChild(listCon);
 
+      let chatCon = document.createElement("div");
+      let senderCon = document.createElement("div");
+
+      let sender = document.createElement("p");
+      let uTag = document.createElement('p')
+      let message = document.createElement("p");
+      
+      let username = 'Guest'
+      sender.textContent = username;
+      uTag.textContent =  username.split("")[0]
+
+      message.textContent = this.msg.value;
+
+      listCon.appendChild(chatCon);
+      chatCon.appendChild(senderCon);
+      senderCon.appendChild(uTag);
+      senderCon.appendChild(sender);
+      chatCon.appendChild(message);
+
+      chatCon.classList.add('chatBubble_Me', 'position_Me' )
+      senderCon.classList.add('sender_Con', 'position_Me',)
+      sender.classList.add('sender_Me')
+      uTag.classList.add('user_Tag_Me')
+      message.classList.add('message_Me', 'position_Me', 'bkg_change_me')
+      this.#socketService.scrollToBottom(shadowRoot)
     }
     this.msg.value = '';
   };
@@ -79,6 +106,5 @@ export class ChatFunctions {
     localStorage.removeItem('aclUD');
     console.log("removed UD", aclUD);
   }
-    
 }
   

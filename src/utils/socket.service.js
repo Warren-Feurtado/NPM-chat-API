@@ -7,7 +7,8 @@ export class SocketService {
     compNID;
     compNSP;
     convoID;
-    mgsHistory = [];
+    msgHistory = [];
+    connectedAgent;
 
 
     constructor() {
@@ -39,8 +40,80 @@ export class SocketService {
             
             this.compNSP.on('visitor:reconnect', (reconData) => {
                 this.convoID = reconData.client.conversations[0]._id;
+                this.msgHistory = reconData.client.conversations[0].messages;
+                // console.log('reconnect data from Server', this.msgHistory);
                 console.log('reconnect data from Server', reconData);
                 console.log('convo ID on reconnect data: ', reconData.client.conversations[0]._id);
+                
+                this.msgHistory.forEach((msgObj) => {
+                    let msgDisplay = shadowRoot.querySelector('#msg_list');
+                    // let listItem = document.createElement('p');
+                    if(msgObj.sender === reconData.client._id) {
+                        // console.log();
+                        let listCon = document.createElement("div");
+                        msgDisplay.appendChild(listCon);
+
+                        let chatCon = document.createElement("div");
+                        let senderCon = document.createElement("div");
+
+                        let sender = document.createElement("p");
+                        let uTag = document.createElement('p')
+                        let message = document.createElement("p");
+      
+                        let username = 'Guest'
+                        sender.textContent = username;
+                        uTag.textContent =  username.split("")[0]
+
+                        message.textContent = msgObj.message;
+                        
+                        listCon.appendChild(chatCon);
+                        chatCon.appendChild(senderCon);
+                        senderCon.appendChild(uTag);
+                        senderCon.appendChild(sender);
+                        chatCon.appendChild(message);
+                        
+                        chatCon.classList.add('chatBubble_Me', 'position_Me' )
+                        senderCon.classList.add('sender_Con', 'position_Me',)
+                        sender.classList.add('sender_Me')
+                        uTag.classList.add('user_Tag_Me')
+                        message.classList.add('message_Me', 'position_Me', 'bkg_change_me')
+                        // this.scrollToBottom(shadowRoot);
+                        
+                    } else {
+                        let listCon = document.createElement("div");
+                        
+                        let chatCon = document.createElement("div");
+                        let senderCon = document.createElement("div");
+                        
+                        let sender = document.createElement("p");
+                        let uTag = document.createElement('p')
+                        let message = document.createElement("p");
+
+                        let username = 'Agent'
+                        sender.textContent = username;
+                        uTag.textContent =  username.split("")[0]
+                        
+                        msgDisplay.appendChild(listCon);
+                        message.textContent = msgObj.message;
+                        
+                        listCon.appendChild(chatCon);
+                        chatCon.appendChild(senderCon);
+                        senderCon.appendChild(uTag);
+                        senderCon.appendChild(sender);
+                        chatCon.appendChild(message);
+                        
+                        chatCon.classList.add('chatBubble_Me' )
+                        senderCon.classList.add('sender_Con')
+                        sender.classList.add('sender_Me')
+                        uTag.classList.add('user_Tag_Me')
+                        message.classList.add('message_Me')
+                        
+                        // this.scrollToBottom(shadowRoot);
+                    }
+                    // msgHistory.appendChild(listItem);
+                })
+               
+                this.scrollToBottom(shadowRoot);
             })
 
             this.compNSP.on('visitor:saved', (convoID) => {
@@ -54,12 +127,41 @@ export class SocketService {
 
             this.compNSP.on('visitor:new_message', (msgObj) => {
                 console.log('message from server: ', msgObj);
+                console.log('checking agent in new message', msgObj.agent)
 
                 let msgHistory = shadowRoot.querySelector('#msg_list');
-                let listItem = document.createElement('p');
-                console.log('heres the history', this.newMsgHistory);
-                listItem.textContent = `Agent: ${msgObj.message}`;
-                msgHistory.appendChild(listItem);
+                // let listItem = document.createElement('p');
+                // console.log('heres the history', this.newMsgHistory);
+                // listItem.textContent = `Agent: ${msgObj.message}`;
+                // msgHistory.appendChild(listItem);
+
+                let listCon = document.createElement("div");
+                msgHistory.appendChild(listCon);
+          
+                let chatCon = document.createElement("div");
+                let senderCon = document.createElement("div");
+          
+                let sender = document.createElement("p");
+                let uTag = document.createElement('p')
+                let message = document.createElement("p");
+                sender.textContent = msgObj.message.agent_firstname;                ;
+                uTag.textContent = msgObj.message.agent_firstname.split("")[0];
+                message.textContent = msgObj.message.message;
+          
+                listCon.appendChild(chatCon);
+                chatCon.appendChild(senderCon);
+                senderCon.appendChild(uTag);
+                senderCon.appendChild(sender);
+                chatCon.appendChild(message);
+          
+                chatCon.classList.add('chatBubble_Me' )
+                senderCon.classList.add('sender_Con')
+                sender.classList.add('sender_Me')
+                uTag.classList.add('user_Tag_Me')
+                message.classList.add('message_Me')
+
+                this.scrollToBottom(shadowRoot);
+
             })
 
             this.compNSP.on('visitor:token', (token) => {
@@ -126,4 +228,12 @@ export class SocketService {
         this.compNSP.emit('visitor:message', msgObj);
         console.log('new message object out: ', msgObj);
     }
+
+    //function to scroll to the bottom of the list of messages
+    scrollToBottom(shadowRoot)  {
+        var chatWindow = shadowRoot.querySelector(".chat_body");
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        console.log("reading shadowroot");
+    }
+
 }
