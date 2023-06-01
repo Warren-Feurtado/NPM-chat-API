@@ -15,6 +15,7 @@ export class ChatFunctions {
     this.#socketService = new SocketService;
     this.chatToggle = this.chatToggle(shadowRoot);
     this.sendMsg = this.sendMsg(shadowRoot);
+    this.validateEmail = this.validateEmail(shadowRoot);
     this.#socketService.getNspId(shadowRoot);
   }
   
@@ -39,6 +40,7 @@ export class ChatFunctions {
       chatIcon.style.display = "block";
       chatWindow.classList.remove("chat-open");
       chatWindow.classList.add("chat-close");
+
       console.log(chatWindow.classList);
       newMsg.value = '';
     } 
@@ -108,5 +110,32 @@ export class ChatFunctions {
     localStorage.removeItem('aclUD');
     console.log("removed UD", aclUD);
   }
+
+  validateEmail = (shadowRoot) => (event) => {
+    event.preventDefault();
+
+    let userName = shadowRoot.querySelector("#u_name")
+    let userEmail = shadowRoot.querySelector("#u_email")
+    let welcomeBox = shadowRoot.querySelector(".welcome")
+    let chatBoxArea = shadowRoot.querySelector("#chatBoxArea")
+
+    var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression pattern for email validation
+    let formVal = pattern.test(userEmail.value);     // Test the email against the pattern
+
+    if (userName.value == "" || !formVal) {
+      alert("Please Provide Valid Name and Email")
+    } else {
+      // alert(`Welcome,  ${userName.value}`)
+      welcomeBox.style.display = "none"
+      chatBoxArea.classList.remove('hide')
+      chatBoxArea.style.display = "block"
+      // chatBoxArea.classList.add('show')
+    }
+
+  }
+
+
+
+  
 }
   
