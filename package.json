@@ -1,5 +1,5 @@
 {
-  "name": "@sdevm/packtest",
+  "name": "@gordonkr/packtest",
   "version": "1.0.1b",
   "dependencies": {
     "lit": "^2.7.3",

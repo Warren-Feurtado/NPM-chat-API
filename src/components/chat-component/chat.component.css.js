@@ -391,8 +391,8 @@ const style = css`
   /* CHAT WINDOW CLOSE ANIMATION */
   @keyframes shrinkChat {
     0% {
-      height: 500px;
-      width: 350px;
+      height: 70vh;
+      width: 30vw;
       margin-bottom: 80px;
       opacity: 1;
     }
@@ -406,8 +406,8 @@ const style = css`
 
   /* OPEN CHAT CLASS */
   .chat-open {
-    height: 500px;
-    width: 350px;
+    height: 70vh;
+    width: 30vw;
     /* border: solid 1px black; */
     animation: expandChat 0.3s ease-in;
     box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
