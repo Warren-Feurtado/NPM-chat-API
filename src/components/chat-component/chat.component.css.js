@@ -40,7 +40,7 @@ const style = css `
   #chatWin {
     /* width: 0px;
     height: 0px; */
-    border-radius: 5px;
+    border-radius: 30px 30px 0px 30px;
     background: #000;
     position: absolute;
     bottom: 80px;
@@ -253,7 +253,7 @@ const style = css `
  .message_Me {
   background: #444444;
   color: #FFFFFF;
-  border-radius: 10px 10px 10px 0px;
+  border-radius: 0px 10px 10px 10px;
   margin: 3px 0px 0px 15px;
   padding: 6px 12px;
   width: fit-content;
