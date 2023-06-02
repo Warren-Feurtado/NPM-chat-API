@@ -66,7 +66,8 @@ const style = css`
   #chatWin .welcome .bg .topBlue {
     width: 100%;
     height: 40%;
-    background: #011935;
+    background-color: #011935;
+    background-image: linear-gradient(135deg, transparent 0%, transparent 56%,rgba(255,171,0, 0.35) 56%, rgba(255,171,0, 0.35) 79%,transparent 79%, transparent 91%,rgba(255,181,0, 0.72) 91%, rgba(255,181,0, 0.72) 100%),linear-gradient(45deg, transparent 0%, transparent 50%,rgba(43,40,148, 0) 50%, rgba(43,40,148, 0) 64%,rgb(255,104,0) 64%, rgb(255,104,0) 85%,transparent 85%, transparent 100%),linear-gradient(90deg, rgb(1,25,53),rgb(1,25,53));
   }
 
   #chatWin .welcome .bg .btmWhite {
@@ -236,7 +237,8 @@ const style = css`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background: #011935;
+    background-color: #011935;
+    background-image: linear-gradient(135deg, transparent 0%, transparent 56%,rgba(255,171,0, 0.35) 56%, rgba(255,171,0, 0.35) 79%,transparent 79%, transparent 91%,rgba(255,181,0, 0.72) 91%, rgba(255,181,0, 0.72) 100%),linear-gradient(45deg, transparent 0%, transparent 50%,rgba(43,40,148, 0) 50%, rgba(43,40,148, 0) 64%,rgb(255,104,0) 64%, rgb(255,104,0) 85%,transparent 85%, transparent 100%),linear-gradient(90deg, rgb(1,25,53),rgb(1,25,53));
     /* padding: 5px; */
     /* border: 2px solid blue; */
   }
