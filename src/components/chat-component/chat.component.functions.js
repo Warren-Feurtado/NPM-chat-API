@@ -16,6 +16,7 @@ export class ChatFunctions {
     this.chatToggle = this.chatToggle(shadowRoot);
     this.sendMsg = this.sendMsg(shadowRoot);
     this.validateEmail = this.validateEmail(shadowRoot);
+    this.guestLogin = this.guestLogin(shadowRoot);
     this.#socketService.getNspId(shadowRoot);
   }
   
@@ -134,7 +135,14 @@ export class ChatFunctions {
 
   }
 
+  guestLogin = (shadowRoot) => (event) => {
+    let welcomeBox = shadowRoot.querySelector(".welcome")
+    let chatBoxArea = shadowRoot.querySelector("#chatBoxArea")
 
+    welcomeBox.style.display = "none"
+    chatBoxArea.classList.remove('hide')
+    chatBoxArea.style.display = "block"
+  }
 
   
 }
