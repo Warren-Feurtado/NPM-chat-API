@@ -129,7 +129,7 @@ export class SocketService {
                 console.log('message from server: ', msgObj);
                 console.log('checking agent in new message', msgObj.agent)
 
-                let msgHistory = shadowRoot.querySelector('#msg_list');
+                let msgHistory = shadowRoot.querySelector('.chat_body');
                 // let listItem = document.createElement('p');
                 // console.log('heres the history', this.newMsgHistory);
                 // listItem.textContent = `Agent: ${msgObj.message}`;
