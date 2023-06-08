@@ -22,12 +22,14 @@ const style = css`
     background-color: #011935;
     /* color: #fff; */
     border-radius: 50%;
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
+    /* position: fixed; */
+    /* bottom: 10px;
+    right: 10px; */
+    margin: 30px 0px 10px 10px;
     cursor: pointer;
     box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25);
     transition: 0.5s ease;
+    float: right;
   }
 
   #chatBub:hover {
@@ -42,9 +44,11 @@ const style = css`
     height: 0px; */
     border-radius: 30px 30px 0px 30px;
     background: #ffff;
-    position: absolute;
-    bottom: 80px;
-    right: 50px;
+    /* position: absolute; */
+    /* bottom: 80px;
+    right: 50px; */
+    /* margin-right: 20px; */
+    transform: translateX(-25px);
     overflow: hidden;
     
     /* box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.25); */
@@ -448,7 +452,7 @@ const style = css`
 
   .chatBubble_Me {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     width: 70%;
     margin-bottom: 20px;
     /* margin-left: auto; */
@@ -503,9 +507,11 @@ const style = css`
  #parentWidget {
   position: fixed;
   width: auto;
-  height: 100vh;
+  height: auto;
   right: 0;
+  bottom: 0;
   z-index: 999999;
+  margin: 0px 20px;
   /* border: 2px solid red; */
  }
 
