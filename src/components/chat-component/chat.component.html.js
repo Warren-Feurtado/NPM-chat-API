@@ -10,6 +10,7 @@ const innerHtml =
   (chatFunctions) =>
     html`
     <!-- CHAT BUBBLE -->
+    <div id="parentWidget">
       <button id="chatBub" @click="${chatFunctions.chatToggle}">
       <svg id="chatIcon" xmlns="http://www.w3.org/2000/svg" version="1.0" width="30px" height="30px" viewBox="0 0 279.000000 287.000000" preserveAspectRatio="xMidYMid meet">
 
@@ -32,7 +33,7 @@ const innerHtml =
        
       </button> -->
       
-    <!-- CHAT WINDOW -->
+      <!-- CHAT WINDOW -->
       <div id="chatWin" class="hide" >
         <div class="welcome">
             <div class="bg">
@@ -124,6 +125,7 @@ const innerHtml =
         </div>
         
       </div>
+</div>
     `;
 
 export { innerHtml };

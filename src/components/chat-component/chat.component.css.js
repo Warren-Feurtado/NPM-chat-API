@@ -500,7 +500,14 @@ const style = css`
     border-radius: 10px 10px 0px 10px;
   }
 
- 
+ #parentWidget {
+  position: fixed;
+  width: auto;
+  height: 100vh;
+  right: 0;
+  z-index: 999999;
+  /* border: 2px solid red; */
+ }
 
 
 
