@@ -87,7 +87,7 @@ const innerHtml =
                     <div class="imgBx">
                         <!-- <img src="" alt=""> -->
                     </div>
-                    <p>Agent Name</p>
+                    <p id="agentNm">Agent Name</p>
                 </div>
     
                 <div class="funcs">

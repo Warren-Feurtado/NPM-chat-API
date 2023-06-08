@@ -2,11 +2,19 @@ import { io } from "socket.io-client";
 import { SOCKETAPI } from "../environment/env";
 
 export class SocketService {
-    domain = {domain: 'test.com'}
+    // domain = {domain: 'hambala.com'};
+    domain = {domain: 'test.com'};
     socket = io(SOCKETAPI);
     compNID;
     compNSP;
     convoID;
+    msgObj = {
+        visName: '',
+        visEmail: '',
+        message: '',
+        token: '',
+        conversationID: ''
+    };
     msgHistory = [];
     connectedAgent;
 
@@ -29,6 +37,14 @@ export class SocketService {
         })
     }
 
+    // setUserNm(shadowRoot) {
+    //     let u_nm = shadowRoot.querySelector('#u_name');
+    //     let u_eml = shadowRoot.querySelector('#u_email');
+
+        
+
+    // }
+
     //"VISITOR NAMSPACE ID" LISTENER / GET ID OF COMPANY TO BE USED TO CONNECT TO NAMESPACE
     getNspId(shadowRoot) {
         this.socket.on('visitor:namespace_id', (nspID) => {
@@ -44,12 +60,21 @@ export class SocketService {
                 // console.log('reconnect data from Server', this.msgHistory);
                 console.log('reconnect data from Server', reconData);
                 console.log('convo ID on reconnect data: ', reconData.client.conversations[0]._id);
-                
+
+                // DISPLAY AGENT NAME IN TOP SECTION OF MESSAGE WINDOW
+                let agentNm = shadowRoot.querySelector('#agentNm');
+                agentNm.textContent = reconData.agent;
+
+                let welcScrn = shadowRoot.querySelector('.welcome');
+                let msgWindow = shadowRoot.querySelector('#chatBoxArea')
+                welcScrn.classList.add('hide');
+                msgWindow.classList.remove('hide');
+                msgWindow.classList.add('show');
+                //DISPLAY EACH MESSAGE FROM HISTORY
                 this.msgHistory.forEach((msgObj) => {
                     let msgDisplay = shadowRoot.querySelector('.chat_body');
                     // let listItem = document.createElement('p');
                     if(msgObj.sender === reconData.client._id) {
-                        // console.log();
                         let listCon = document.createElement("div");
                         msgDisplay.appendChild(listCon);
 
@@ -60,9 +85,10 @@ export class SocketService {
                         let uTag = document.createElement('p')
                         let message = document.createElement("p");
       
+                        // let username = reconData.client.name;
                         let username = 'Guest'
                         sender.textContent = username;
-                        uTag.textContent =  username.split("")[0]
+                        uTag.textContent =  username.split("")[0];
 
                         message.textContent = msgObj.message;
                         
@@ -89,7 +115,11 @@ export class SocketService {
                         let uTag = document.createElement('p')
                         let message = document.createElement("p");
 
-                        let username = 'Agent'
+                        let agentNm = shadowRoot.querySelector('#agentNm');
+
+                        // let username = reconData.agent.name;
+                        let username = 'Agent';
+                        agentNm.textContent = username;
                         sender.textContent = username;
                         uTag.textContent =  username.split("")[0]
                         
@@ -123,6 +153,9 @@ export class SocketService {
 
             this.compNSP.on('visitor:agent_connected', (data) => {
                 console.log('agent connect data: ', data);
+
+                let agentNm = shadowRoot.querySelector('#agentNm');
+                agentNm.textContent = data;
             })
 
             this.compNSP.on('visitor:new_message', (msgObj) => {
@@ -172,6 +205,19 @@ export class SocketService {
         
     }
 
+    // //NEW VISITOR
+    // newVis(user) {
+    //     this.compNSP.emit('visitor:first_message', user);
+    // }
+
+    //"VISITOR SAVED" LISTENER / GET CONVO ID IF NEW CONVO WAS CREATED
+    visSaved() {
+        this.compNSP.on('visitor:saved', (convoID) => {
+            console.log('new convo started...', convoID);
+            this.convoID = convoID;
+        })
+    }
+
     //"VISITOR RECONNECT" LISTENER / GET CLIENT DATA IF EXISTING USER
     visRecon() {
         this.compNSP.on('visitor:reconnect', (reconData) => {
@@ -181,13 +227,6 @@ export class SocketService {
         })
     }
 
-    //"VISITOR SAVED" LISTENER / GET CONVO ID IF NEW CONVO WAS CREATED
-    visSaved() {
-        this.compNSP.on('visitor:saved', (convoID) => {
-            console.log('new convo started...', convoID);
-            this.convoID = convoID;
-        })
-    }
 
     //NEW TOKEN LISTENER / GET NEW TOKEN IF EXPIRED TOKEN OR NEW USER
     newToken() {
@@ -217,16 +256,50 @@ export class SocketService {
         console.log('aclUD sent...: ', aclUD);
     }
 
+    //ACCEPTS A NEW USER'S CREDENTIALS AND STORES IT TEMPORARILY UNTIL THEY ARE READY TO SEND A MESSAGE
+    storeUser(uName, uEmail) {
+        this.msgObj.name = uName;
+        this.msgObj.email = uEmail;
+        console.log(this.msgObj);
+    }
+    
     //MESSAGE OUT EMITTER
     newMsgOut(msg) {
+        console.log(`username and email in service from component: ${this.msgObj.name}, ${this.msgObj.email}`);
         console.log('convo id when sending a message: ', this.convoID);
-        let msgObj = {
-            message: msg,
-            token: localStorage.getItem('aclUD'),
-            conversationID: this.convoID
+        // let msgObj = {
+        //     message: msg,
+        //     token: localStorage.getItem('aclUD'),
+        //     conversationID: this.convoID
+        // }
+
+        if(this.msgObj.visName != "" && this.msgObj.visEmail != "") {
+            this.msgObj = {
+                name: this.msgObj.visName,
+                email: this.msgObj.visEmail,
+                message: msg,
+                token: localStorage.getItem('aclUD'),
+                conversationID: this.convoID
+            }
+        } else {
+
+            this.msgObj = {
+                name: "",
+                email: "",
+                message: msg,
+                token: localStorage.getItem('aclUD'),
+                conversationID: this.convoID
+            }
+
+            this.compNSP.on('visitor:guest_name', (gstNm) => {
+                console.log('Server generated guest name', gstNm);
+            });
         }
-        this.compNSP.emit('visitor:message', msgObj);
-        console.log('new message object out: ', msgObj);
+        this.compNSP.emit('visitor:message', this.msgObj);
+        console.log('new message object out: ', this.msgObj);
+        this.msgObj.name = "";
+        this.msgObj.email = "";
+
     }
 
     //function to scroll to the bottom of the list of messages
