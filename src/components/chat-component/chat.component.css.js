@@ -452,7 +452,7 @@ const style = css`
 
   .chatBubble_Me {
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     width: 70%;
     margin-bottom: 20px;
     /* margin-left: auto; */
