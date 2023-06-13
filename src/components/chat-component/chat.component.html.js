@@ -65,6 +65,7 @@ const innerHtml =
 
 
         <div id="chatBoxArea" class='hide'>
+            <div class="actChat">
             <div class="chat_head">
                 <div class="name">
                     <div class="imgBx">
@@ -104,10 +105,66 @@ const innerHtml =
                 </div>
                 </form>
             </div>
+            </div>
+
+            <div class="overlayCon">
+                <div class="opts">
+                    <!--first option: session timed out and user logged in-->
+                    <div class="logSessExp">
+                        <p class="leadingTxt">  You Session has expired because of <br> inactivity for over 10 mins </p>
+                        <p> Would You Like to Continue ?</p>
+                        <div class="btns">
+                            <button>Yes</button>
+                            <button>No</button>
+                        </div>
+                    </div>
+
+                    <!--second option: session timed out and user not logged in-->
+                    <div class="guestSessExp">
+                      <p class="leadingTxt">  You Session has expired because of <br> inactivity for over 10 mins </p>
+                        <div class="btns">
+                            <button> 
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 73.4-73.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-128 128z"/></svg>
+                                </div>
+                            Back To Home
+                            </button>
+                        </div>
+                    </div>
+
+                    <!--third option: OTP for logged in user-->
+                    <div class="logSessOTP"> 
+                        <form action="">
+                            <p class="title">One time password</p>
+                            <p>A one time code has been sent to the <br> email you provide</p>
+                            <div class="uSessOtp">
+                                <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                                <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                            </div>
+                            <div class="btns">
+                                <button>Verify</button>
+                            </div>
+                            <div class="subDets">
+                                <p>Didn't get OTP? Resent OTP</p>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                    </div>
+
+
+            </div>
         </div>
         
       </div>
 
+      <!--Chat Bubble Icon-->
 
       <button id="chatBub" @click="${chatFunctions.chatToggle}">
       <svg id="chatIcon" xmlns="http://www.w3.org/2000/svg" version="1.0" width="30px" height="30px" viewBox="0 0 279.000000 287.000000" preserveAspectRatio="xMidYMid meet">
