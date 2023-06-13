@@ -134,7 +134,7 @@ const innerHtml =
 
                     <!--third option: OTP for logged in user-->
                     <div class="logSessOTP"> 
-                        <form action="">
+                        <form id="otpForm" action="">
                             <p class="title">One time password</p>
                             <p>A one time code has been sent to the <br> email you provide</p>
                             <div class="uSessOtp">
