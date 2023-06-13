@@ -257,10 +257,10 @@ export class SocketService {
     }
 
     //ACCEPTS A NEW USER'S CREDENTIALS AND STORES IT TEMPORARILY UNTIL THEY ARE READY TO SEND A MESSAGE
-    storeUser(uName, uEmail) {
-        this.msgObj.name = uName;
-        this.msgObj.email = uEmail;
-        console.log(this.msgObj);
+    storeUser(visName, visEmail) {
+        this.msgObj.visName = visName;
+        this.msgObj.visEmail = visEmail;
+        console.log('Message object after storing user: ', this.msgObj);
     }
     
     //MESSAGE OUT EMITTER
@@ -275,8 +275,8 @@ export class SocketService {
 
         if(this.msgObj.visName != "" && this.msgObj.visEmail != "") {
             this.msgObj = {
-                name: this.msgObj.visName,
-                email: this.msgObj.visEmail,
+                visName: this.msgObj.visName,
+                visEmail: this.msgObj.visEmail,
                 message: msg,
                 token: localStorage.getItem('aclUD'),
                 conversationID: this.convoID
@@ -284,8 +284,6 @@ export class SocketService {
         } else {
 
             this.msgObj = {
-                name: "",
-                email: "",
                 message: msg,
                 token: localStorage.getItem('aclUD'),
                 conversationID: this.convoID
@@ -298,7 +296,7 @@ export class SocketService {
         this.compNSP.emit('visitor:message', this.msgObj);
         console.log('new message object out: ', this.msgObj);
         this.msgObj.name = "";
-        this.msgObj.email = "";
+        this.msgObj.email = ""; 
 
     }
 
