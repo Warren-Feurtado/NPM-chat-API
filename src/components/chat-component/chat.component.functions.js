@@ -185,8 +185,68 @@ export class ChatFunctions {
     welcomeBox.classList.add('hide');
     chatBoxArea.classList.remove('hide');
     chatBoxArea.classList.add('show');
+    this.addId()
   }
 
+
+  addId = (shadowRoot) => (event) =>  {
+    let allFields  = shadowRoot.querySelectorAll('input[type="number"]');
+    console.log(" form fields ", allFields.length)
+    
+    let i = 0
+
+    allFields.forEach(otpInput => {
+      otpInput.setAttribute('id', i++)
+
+      otpInput.addEventListener("keyUp", () => {
+        console.log("yow", otpInput.value)
+      })
+    });
+  }
+
+  evPrev = (shadowRoot) => (event) => {
+    event.preventDefault();
+  }
+
+  
+  otpKeydown = (shadowRoot) => (event) => {
+    if(event.key === 'Backspace' && event.target.value === '') {
+      this.toPrevField(shadowRoot);
+    }
+  }
+  
+  changeField = (shadowRoot) => (index) => (event) => {
+    // return (event) => {
+      const { value } = event.target;
+      this.otpInputs[index] = value;
+
+      if(value !== '') {
+        this.toNxtField(shadowRoot);
+      }
+    // }
+  }
+
+  toPrevField = (shadowRoot) => (event) => {
+    if(this.currIndex > 0) {
+      this.currIndex--;
+      // this.requestUpdate();
+      shadowRoot.querySelector(`input:nth-child(${this.currIndex + 1})`).focus();
+      console.log('current Index:', this.currIndex);
+    }
+  }
+
+  toNxtField = (shadowRoot) => (event) => {
+    if(this.currIndex < this.otpInputs.length - 1) {
+      this.currIndex++;
+      // this.requestUpdate();
+      shadowRoot.querySelector(`input:nth-child(${this.currIndex + 1})`).focus();
+    }
+  }
+
+  verifyOtp() {
+    const otp = this.otpInputs.join('');
+    console.log('otp ready for verification: ', otp);
+  }
   
 }
   

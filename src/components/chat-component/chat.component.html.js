@@ -137,7 +137,7 @@ const innerHtml =
                         
                         <form id="otpForm" @input="${chatFunctions.evPrev}">
                             <p class="title">One Time Password</p>
-                            <p>A one time code has been sent to the <br> email you provide</p>
+                            <p>A one time code has been sent to the <br> email you provided</p>
                             <div class="uSessOtp">
                                 ${chatFunctions.otpInputs.map((value, index) => html`
                                     <input
