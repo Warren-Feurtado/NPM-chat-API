@@ -20,6 +20,7 @@ export class ChatFunctions {
     this.sendMsg = this.sendMsg(shadowRoot);
     this.validateEmail = this.validateEmail(shadowRoot);
     this.guestLogin = this.guestLogin(shadowRoot);
+    this.addId = this.addId(shadowRoot);
   }
   
   // TOGGLE CHAT WINDOW OPEN AND CLOSE
@@ -177,6 +178,23 @@ export class ChatFunctions {
     welcomeBox.classList.add('hide');
     chatBoxArea.classList.remove('hide');
     chatBoxArea.classList.add('show');
+    this.addId()
+  }
+
+
+  addId = (shadowRoot) => (event) =>  {
+    let allFields  = shadowRoot.querySelectorAll('input[type="number"]');
+    console.log(" form fields ", allFields.length)
+    
+    let i = 0
+
+    allFields.forEach(otpInput => {
+      otpInput.setAttribute('id', i++)
+
+      otpInput.addEventListener("keyUp", () => {
+        console.log("yow", otpInput.value)
+      })
+    });
   }
 
   

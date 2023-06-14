@@ -481,6 +481,16 @@ const style = css`
       width: 100%;
     }
 
+    #chatWin #chatBoxArea .overlayCon .logSessOTP p {
+      font-size: 14px;
+    }
+
+    #chatWin #chatBoxArea .overlayCon .logSessOTP .title {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
     #chatWin #chatBoxArea .overlayCon .logSessOTP {
       width: 100%;
       display: flex;
@@ -501,6 +511,26 @@ const style = css`
       padding: 4px;
       margin: 5px;
       border-radius: 5px;
+    }
+
+    #chatWin #chatBoxArea .overlayCon .logSessOTP .btns {
+      width: 100%;
+      /* border: 2px solid red; */
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding-top: 5px;
+    }
+
+    #chatWin #chatBoxArea .overlayCon .logSessOTP .btns button {
+      width: 50%;
+      background: #011935;
+      border: none;
+      color: #fff;
+      border-radius: 20px;
+      padding: 5px;
+      margin: 10px 0px 5px;
     }
 
 

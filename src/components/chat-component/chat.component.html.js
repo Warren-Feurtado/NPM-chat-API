@@ -134,8 +134,8 @@ const innerHtml =
 
                     <!--third option: OTP for logged in user-->
                     <div class="logSessOTP"> 
-                        <form id="otpForm" action="">
-                            <p class="title">One time password</p>
+                        <form id="otpForm">
+                            <p class="title">One Time Password</p>
                             <p>A one time code has been sent to the <br> email you provide</p>
                             <div class="uSessOtp">
                                 <input type="number" name="" id="" maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
@@ -149,7 +149,7 @@ const innerHtml =
                                 <button>Verify</button>
                             </div>
                             <div class="subDets">
-                                <p>Didn't get OTP? Resent OTP</p>
+                                <p>Didn't get OTP? <b>Resent OTP</b></p>
                             </div>
 
                         </form>
