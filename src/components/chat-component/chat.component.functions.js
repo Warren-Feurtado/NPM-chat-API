@@ -20,6 +20,14 @@ export class ChatFunctions {
     this.sendMsg = this.sendMsg(shadowRoot);
     this.validateEmail = this.validateEmail(shadowRoot);
     this.guestLogin = this.guestLogin(shadowRoot);
+    this.evPrev = this.evPrev(shadowRoot);
+    this.toNxtField = this.toNxtField(shadowRoot);
+    this.toPrevField = this.toPrevField(shadowRoot);
+    this.otpKeydown = this.otpKeydown(shadowRoot);
+    this.changeField = this.changeField(shadowRoot);
+
+    this.otpInputs = ['', '', '', '', '', ''];  //FOR STORING OTP INPUT VALUES
+    this.currIndex = 0;  //INDEX OF CURRENTLY FOCUSED OTP INPUT 
   }
   
   // TOGGLE CHAT WINDOW OPEN AND CLOSE
@@ -179,6 +187,49 @@ export class ChatFunctions {
     chatBoxArea.classList.add('show');
   }
 
+  evPrev = (shadowRoot) => (event) => {
+    event.preventDefault();
+  }
+
+  
+  otpKeydown = (shadowRoot) => (event) => {
+    if(event.key === 'Backspace' && event.target.value === '') {
+      this.toPrevField(shadowRoot);
+    }
+  }
+  
+  changeField = (shadowRoot) => (index) => (event) => {
+    // return (event) => {
+      const { value } = event.target;
+      this.otpInputs[index] = value;
+
+      if(value !== '') {
+        this.toNxtField(shadowRoot);
+      }
+    // }
+  }
+
+  toPrevField = (shadowRoot) => (event) => {
+    if(this.currIndex > 0) {
+      this.currIndex--;
+      // this.requestUpdate();
+      shadowRoot.querySelector(`input:nth-child(${this.currIndex + 1})`).focus();
+      console.log('current Index:', this.currIndex);
+    }
+  }
+
+  toNxtField = (shadowRoot) => (event) => {
+    if(this.currIndex < this.otpInputs.length - 1) {
+      this.currIndex++;
+      // this.requestUpdate();
+      shadowRoot.querySelector(`input:nth-child(${this.currIndex + 1})`).focus();
+    }
+  }
+
+  verifyOtp() {
+    const otp = this.otpInputs.join('');
+    console.log('otp ready for verification: ', otp);
+  }
   
 }
   

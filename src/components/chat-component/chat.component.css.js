@@ -391,20 +391,21 @@ const style = css`
     fill: blue;
   }
 
-    #chatWin #chatBoxArea .overlayCon {
+    #chatWin .overlayCon {
       width: 100%;
-    height: 100%;
-    background: rgba(0,0,0, 0.7);
-    position: absolute;
-    z-index: 1000;
-    backdrop-filter: blur(1.5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 20px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      position: absolute;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(1.5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0px 20px;
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts{
+    #chatWin .overlayCon .opts{
       height: fit-content;
       width: 100%;
       background: white;
@@ -413,30 +414,31 @@ const style = css`
       border-radius: 5px;
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts .logSessExp p {
+    #chatWin .overlayCon .opts .logSessExp {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      display: none;
+    }
+     
+    #chatWin .overlayCon .opts .logSessExp p {
       padding: 5px 0px;
       line-height: 1.2rem;
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts .guestSessExp p {
+    #chatWin .overlayCon .opts .guestSessExp p {
       line-height: 1.2rem;
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts .logSessExp {
+
+    #chatWin .overlayCon .opts .guestSessExp {
       display: flex;
       flex-direction: column;
       align-items: center;
       display: none;
     } 
 
-    #chatWin #chatBoxArea .overlayCon .opts .guestSessExp {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      display: none;
-    } 
-
-    #chatWin #chatBoxArea .overlayCon .opts .logSessExp .btns, #chatWin #chatBoxArea .overlayCon .opts .guestSessExp .btns{
+    #chatWin .overlayCon .opts .logSessExp .btns, #chatWin .overlayCon .opts .guestSessExp .btns{
       width: 50%;
       /* border: 2px solid red; */
       display: flex;
@@ -445,11 +447,11 @@ const style = css`
       padding-top: 5px;
     }
 
-    /* #chatWin #chatBoxArea .overlayCon .opts .guestSessExp {
+    /* #chatWin .overlayCon .opts .guestSessExp {
       display: none;
     } */
 
-    #chatWin #chatBoxArea .overlayCon .opts .logSessExp .btns button{
+    #chatWin .overlayCon .opts .logSessExp .btns button{
       width: 35%;
       background: #011935;
       border: none;
@@ -458,7 +460,7 @@ const style = css`
       padding: 2px;
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts .guestSessExp .btns button{
+    #chatWin .overlayCon .opts .guestSessExp .btns button{
       width: 100%;
       background: #011935;
       border: none;
@@ -472,35 +474,55 @@ const style = css`
       justify-content: space-around
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts .guestSessExp .btns button .icon {
+    #chatWin .overlayCon .opts .guestSessExp .btns button .icon {
       width: 15%;
     }
 
-    #chatWin #chatBoxArea .overlayCon .opts .guestSessExp .btns button .icon svg {
+    #chatWin .overlayCon .opts .guestSessExp .btns button .icon svg {
       fill: #fff;
       width: 100%;
     }
 
-    #chatWin #chatBoxArea .overlayCon .logSessOTP {
+    #chatWin .overlayCon .logSessOTP {
       width: 100%;
       display: flex;
       flex-direction: row;
     }
 
-    #chatWin #chatBoxArea .overlayCon .logSessOTP .uSessOtp {
-      width: 100%;
+    #chatWin .overlayCon .logSessOTP .uSessOtp {
+      width: 90%;
+      margin: auto;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       margin-top: 10px;
     }
     
-    #chatWin #chatBoxArea .overlayCon .logSessOTP .uSessOtp input{
-      width: 15%;
-      border: 2px solid skyblue;
+    #chatWin .overlayCon .logSessOTP .uSessOtp input[type="number"]{
+      width: 10%;
+      border: 2px solid black;
       padding: 4px;
       margin: 5px;
       border-radius: 5px;
+      text-align: center;
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+    }
+
+    .uSessOtp input[type="number"]::-webkit-inner-spin-button,
+    .uSessOtp input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .uSessOtp input[type="number"] {
+      -moz-appearance: textfield; /* Firefox */
+    }
+
+    .uSessOtp input[type="number"]:focus {
+      border: 2px solid blue;
     }
 
 
@@ -513,8 +535,8 @@ const style = css`
       margin-bottom: -20px;
     }
     100% {
-      height: 350px;
-      width: 300px;
+      height: 500px;
+      width: 350px;
       margin-bottom: 80px;
       opacity: 1;
     }
