@@ -134,8 +134,9 @@ const innerHtml =
 
                     <!--third option: OTP for logged in user-->
                     <div class="logSessOTP"> 
+                        
                         <form id="otpForm" @input="${chatFunctions.evPrev}">
-                            <p class="title">One time password</p>
+                            <p class="title">One Time Password</p>
                             <p>A one time code has been sent to the <br> email you provide</p>
                             <div class="uSessOtp">
                                 ${chatFunctions.otpInputs.map((value, index) => html`
@@ -158,7 +159,7 @@ const innerHtml =
                                 <button @click="${chatFunctions.verifyOtp}">Verify</button>
                             </div>
                             <div class="subDets">
-                                <p>Didn't get OTP? Resent OTP</p>
+                                <p>Didn't get OTP? <b>Resent OTP</b></p>
                             </div>
                         </form>
                     </div>
