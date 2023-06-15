@@ -26,6 +26,8 @@ export class ChatFunctions {
     this.toPrevField = this.toPrevField(shadowRoot);
     this.otpKeydown = this.otpKeydown(shadowRoot);
     this.changeField = this.changeField(shadowRoot);
+    this.checkActive = this.checkActive(shadowRoot)
+    this.displayBoxC = this.displayBoxC(shadowRoot)
 
     this.otpInputs = ['', '', '', '', '', ''];  //FOR STORING OTP INPUT VALUES
     this.currIndex = 0;  //INDEX OF CURRENTLY FOCUSED OTP INPUT 
@@ -50,7 +52,7 @@ export class ChatFunctions {
       // shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).style.border="2px solid darkblue";
       shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.remove("otpInputdisbl");
       shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.add("otpInputActv");
-      
+      this.startTimer();
       
     } 
     else if (chatWindow.classList.contains("chat-open")) {
@@ -96,6 +98,7 @@ export class ChatFunctions {
       welcomeBox.classList.add('hide');
       chatBoxArea.classList.remove('hide');
       chatBoxArea.classList.add('show');
+      // this.startTimer();
 
       this.visName = userName.value;
       this.visEmail = userEmail.value;
@@ -260,6 +263,37 @@ export class ChatFunctions {
     const otp = this.otpInputs.join('');
     console.log('otp ready for verification: ', otp);
   }
+
+    //EXAMPLE THAT THEY GAVE
+   timeoutId; //Global variable
+
+    startTimer() {
+    this.timeoutId = setTimeout(this.displayBoxC, 5000); // 5 seconds
+    console.log('start timer');
+    }
+
+    resetTimer() {
+    clearTimeout(this.timeoutId);
+    this.startTimer();
+    }
+
+    displayBoxC = (shadowRoot) => (event) =>{
+    shadowRoot.querySelector('.overlayCon').style.display = 'none';
+    }
+
+    checkActive = (shadowRoot) => (event) =>{
+      chatArea = shadowRoot.getElementById("chatWin")
+      chatArea.addEventListener('keydown', resetTimer);
+      chatArea.addEventListener('mousemove', resetTimer);
+      this.startTimer()
+    }
+    
+    // document.addEventListener('keydown', resetTimer);
+    // document.addEventListener('mousemove', resetTimer);
+    // startTimer();
+    
+    
+
   
 }
   

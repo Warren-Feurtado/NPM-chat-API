@@ -418,13 +418,15 @@ const style = css`
       text-align: center;
       padding: 10px;
       border-radius: 5px;
+      color: #011935;
     }
 
     #chatWin .overlayCon .opts .logSessExp {
       display: flex;
       flex-direction: column;
       align-items: center;
-      display: none;
+      padding: 0px 15px;
+      // display: none;
     }
      
     #chatWin .overlayCon .opts .logSessExp p {
@@ -444,7 +446,17 @@ const style = css`
       display: none;
     } 
 
-    #chatWin .overlayCon .opts .logSessExp .btns, #chatWin .overlayCon .opts .guestSessExp .btns{
+    #chatWin .overlayCon .opts .logSessExp .btns {
+      width: 65%;
+      /* border: 2px solid red; */
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-top: 5px;
+      margin: 9px 0px;
+    }
+
+     #chatWin .overlayCon .opts .guestSessExp .btns{
       width: 50%;
       /* border: 2px solid red; */
       display: flex;
@@ -454,12 +466,12 @@ const style = css`
     }
 
     #chatWin .overlayCon .opts .logSessExp .btns button{
-      width: 35%;
+      width: 45%;
       background: #011935;
       border: none;
       color: #fff;
       border-radius: 20px;
-      padding: 2px;
+      padding: 5px;
     }
 
     #chatWin .overlayCon .opts .guestSessExp .btns button{
@@ -489,7 +501,18 @@ const style = css`
       width: 100%;
       display: flex;
       flex-direction: row;
-      display: none;
+      display: none; 
+    }
+
+    #chatWin .overlayCon .title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #chatWin .overlayCon .headline {
+      font-size: 14px;
+      color: #000;
     }
 
     #chatWin .overlayCon .logSessOTP .uSessOtp {
@@ -512,6 +535,36 @@ const style = css`
       /* display: flex;
       justify-content: center;
       align-items: center; */
+    }
+
+    #chatWin .overlayCon .opts .logSessOTP .btns{
+      width: 100%;
+      /* border: 2px solid red; */
+      display: flex;
+      justify-content: center;
+      padding-top: 5px;
+      margin: 10px 0px 30px;
+    }
+
+    #chatWin .overlayCon .opts .logSessOTP .btns button{
+      width: 50%;
+      background: #011935;
+      border: none;
+      color: #fff;
+      border-radius: 20px;
+      padding: 5px;
+    }
+
+
+    #chatWin .overlayCon .logSessOTP .subDets {
+      font-size: 12px;
+      font-weight: 200;
+      color: rgba(0,0,0, 0.8)
+    }
+
+    #chatWin .overlayCon .logSessOTP .subDets b {
+      color: #011935;
+      margin-left: 2px;
     }
 
     .uSessOtp .otpInput::-webkit-inner-spin-button,

@@ -111,8 +111,8 @@ const innerHtml =
                 <div class="opts">
                     <!--first option: session timed out and user logged in-->
                     <div class="logSessExp">
-                        <p class="leadingTxt">  You Session has expired because of <br> inactivity for over 10 mins </p>
-                        <p> Would You Like to Continue ?</p>
+                        <p class="title">Session Expired </p>
+                        <p class="headline">  Your Session has expired because of inactivity for over 10 mins. Would You Like to Continue ?</p>
                         <div class="btns">
                             <button>Yes</button>
                             <button>No</button>
@@ -121,7 +121,8 @@ const innerHtml =
 
                     <!--second option: session timed out and user not logged in-->
                     <div class="guestSessExp">
-                        <p class="leadingTxt">  You Session has expired because of <br> inactivity for over 10 mins </p>
+                        <p class="title">Session Expired </p>
+                        <p class="headline">  Your Session has expired because of <br> inactivity for over 10 mins </p>
                         <div class="btns">
                             <button> 
                                 <div class="icon">
@@ -136,8 +137,8 @@ const innerHtml =
                     <div class="logSessOTP"> 
                         
                         <form id="otpForm" @input="${chatFunctions.evPrev}">
-                            <p class="title">One Time Password</p>
-                            <p>A one time code has been sent to the <br> email you provided</p>
+                            <p class="title">OTP Verification</p>
+                            <p class="headline">A one time code has been sent to the <br> email you provided</p>
                             <div class="uSessOtp">
                                 ${chatFunctions.otpInputs.map((value, index) => html`
                                     <input
