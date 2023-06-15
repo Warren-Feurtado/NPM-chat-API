@@ -1,4 +1,5 @@
 
+
 import { SocketService } from "../../utils/socket.service"
 
 export class ChatFunctions {
@@ -43,6 +44,14 @@ export class ChatFunctions {
       chatIcon.classList.add("hide");
       closeIcon.classList.add("show");
       this.#socketService.scrollToBottom(shadowRoot);
+      // shadowRoot.querySelectorAll(`.otpInput`).setAttribute('disabled', 'true');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).removeAttribute('disabled');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).focus();
+      // shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).style.border="2px solid darkblue";
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.remove("otpInputdisbl");
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.add("otpInputActv");
+      
+      
     } 
     else if (chatWindow.classList.contains("chat-open")) {
       closeIcon.classList.remove("show");
@@ -189,21 +198,6 @@ export class ChatFunctions {
   }
 
 
-  addId = (shadowRoot) => (event) =>  {
-    let allFields  = shadowRoot.querySelectorAll('input[type="number"]');
-    console.log(" form fields ", allFields.length)
-    
-    let i = 0
-
-    allFields.forEach(otpInput => {
-      otpInput.setAttribute('id', i++)
-
-      otpInput.addEventListener("keyUp", () => {
-        console.log("yow", otpInput.value)
-      })
-    });
-  }
-
   evPrev = (shadowRoot) => (event) => {
     event.preventDefault();
   }
@@ -212,6 +206,8 @@ export class ChatFunctions {
   otpKeydown = (shadowRoot) => (event) => {
     if(event.key === 'Backspace' && event.target.value === '') {
       this.toPrevField(shadowRoot);
+    } else if(event.key === 'Backspace' && shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).value !== '') {
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).value = '';
     }
   }
   
@@ -230,8 +226,13 @@ export class ChatFunctions {
     if(this.currIndex > 0) {
       this.currIndex--;
       // this.requestUpdate();
-      shadowRoot.querySelector(`input:nth-child(${this.currIndex + 1})`).focus();
-      console.log('current Index:', this.currIndex);
+      // shadowRoot.querySelector(`.otpInput`).setAttribute('disabled');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).removeAttribute('disabled');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).focus();
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 2})`).setAttribute('disabled', 'true');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 2})`).classList.remove("otpInputActv");
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 2})`).classList.add("otpInputdisbl");
+      console.log('current Index:', this.currIndex + 1);
     }
   }
 
@@ -239,11 +240,23 @@ export class ChatFunctions {
     if(this.currIndex < this.otpInputs.length - 1) {
       this.currIndex++;
       // this.requestUpdate();
-      shadowRoot.querySelector(`input:nth-child(${this.currIndex + 1})`).focus();
+      // shadowRoot.querySelectorAll(`.otpInput`).setAttribute('disabled', 'true');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).removeAttribute('disabled');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).focus();
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex})`).setAttribute('disabled', 'true');
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.remove("otpInputdisbl");
+      shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.add("otpInputActv");
+      // if(!shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`)) {
+      //   shadowRoot.querySelector(`.otpInput`).setAttribute('disabled');
+      // } else {
+      //   shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).removeAttribute('disabled');
+      //   shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).setAttribute('enabled');
+      // }
     }
   }
 
-  verifyOtp() {
+  verifyOtp(event) {
+    this.evPrev(event);
     const otp = this.otpInputs.join('');
     console.log('otp ready for verification: ', otp);
   }

@@ -143,9 +143,11 @@ const innerHtml =
                                     <input
                                         type="number"
                                         .value="${value}"
+                                        class="otpInput otpInputdisbl"
                                         @keydown="${chatFunctions.otpKeydown}"
                                         @input="${chatFunctions.changeField(index)}"
                                         maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        disabled
                                     >
                                 `)}
                                 <!-- <input maxlength="1" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
