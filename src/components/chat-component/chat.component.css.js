@@ -168,6 +168,7 @@ const style = css`
   #chatWin .welcome .overlayGreet .formCon button {
     background: none;
     color: #fff;
+    cursor: pointer;
   }
 
   #chatWin .welcome .overlayGreet .divider {
@@ -227,6 +228,7 @@ const style = css`
   #chatWin .welcome .overlayGreet .anonymousUser button {
     background: none;
     color: #fff;
+    cursor: pointer;
   }
 
   #chatWin #chatBoxArea {
@@ -397,7 +399,7 @@ const style = css`
     fill: blue;
   }
 
-    #chatWin .overlayCon {
+    #chatWin #overlayCon {
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.7);
@@ -405,13 +407,14 @@ const style = css`
       top: 0;
       z-index: 1000;
       backdrop-filter: blur(1.5px);
-      display: flex;
+      display: none;  
       justify-content: center;
       align-items: center;
       padding: 0px 20px;
+      
     }
 
-    #chatWin .overlayCon .opts{
+    #chatWin #overlayCon .opts{
       height: fit-content;
       width: 100%;
       background: white;
@@ -421,101 +424,108 @@ const style = css`
       color: #011935;
     }
 
-    #chatWin .overlayCon .opts .logSessExp {
-      display: flex;
+    #chatWin #overlayCon .opts .logSessExp {
+      /* display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: center; */
       padding: 0px 15px;
-      // display: none;
+      /* display: none; */
     }
      
-    #chatWin .overlayCon .opts .logSessExp p {
-      padding: 5px 0px;
+    #chatWin #overlayCon .opts .logSessExp p {
+      padding: 3px 0px;
       line-height: 1.2rem;
     }
 
-    #chatWin .overlayCon .opts .guestSessExp p {
+    #chatWin #overlayCon .opts .guestSessExp p {
+      padding: 3px 0px;
       line-height: 1.2rem;
     }
 
 
-    #chatWin .overlayCon .opts .guestSessExp {
-      display: flex;
+    #chatWin #overlayCon .opts .guestSessExp {
+      /* display: flex;
       flex-direction: column;
-      align-items: center;
-      display: none;
+      align-items: center; */
+      /* display: none; */
     } 
 
-    #chatWin .overlayCon .opts .logSessExp .btns {
-      width: 65%;
+    #chatWin #overlayCon .opts .logSessExp .btns {
+      width: 100%;
       /* border: 2px solid red; */
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      padding-top: 5px;
-      margin: 9px 0px;
+      justify-content: center;
+      align-items: center;
+      /* padding-top: 5px; */
+      margin: 15px auto;
     }
 
-     #chatWin .overlayCon .opts .guestSessExp .btns{
+     #chatWin #overlayCon .opts .guestSessExp .btns{
       width: 50%;
       /* border: 2px solid red; */
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding-top: 5px;
+      /* flex-direction: row; */
+      justify-content: center;
+      align-items: center;
+      margin: 9px auto;
+      /* padding-top: 5px; */
     }
 
-    #chatWin .overlayCon .opts .logSessExp .btns button{
-      width: 45%;
+    #chatWin #overlayCon .opts .logSessExp .btns button{
+      width: fit-content;
       background: #011935;
       border: none;
       color: #fff;
       border-radius: 20px;
-      padding: 5px;
+      padding: 5px 20px;
+      margin: 0 5px;
+      cursor: pointer;
     }
 
-    #chatWin .overlayCon .opts .guestSessExp .btns button{
+    #chatWin #overlayCon .opts .guestSessExp .btns button{
       width: 100%;
       background: #011935;
       border: none;
       color: #fff;
       border-radius: 20px;
       padding: 5px;
-      margin: 15px 0px 5px;
+      /* margin: 15px 0px 5px; */
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-around
+      justify-content: space-around;
+      cursor: pointer;
     }
 
-    #chatWin .overlayCon .opts .guestSessExp .btns button .icon {
+    #chatWin #overlayCon .opts .guestSessExp .btns button .icon {
       width: 15%;
     }
 
-    #chatWin .overlayCon .opts .guestSessExp .btns button .icon svg {
+    #chatWin #overlayCon .opts .guestSessExp .btns button .icon svg {
       fill: #fff;
       width: 100%;
     }
 
-    #chatWin .overlayCon .logSessOTP {
+    #chatWin #overlayCon .logSessOTP {
       width: 100%;
-      display: flex;
-      flex-direction: row;
-      display: none; 
+      /* display: flex;
+      flex-direction: row; */
+      /* display: none;  */
     }
 
-    #chatWin .overlayCon .title {
+    #chatWin #overlayCon .title {
       font-size: 18px;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    #chatWin .overlayCon .headline {
+    #chatWin #overlayCon .headline {
       font-size: 14px;
       color: #000;
     }
 
-    #chatWin .overlayCon .logSessOTP .uSessOtp {
+    #chatWin #overlayCon .logSessOTP .uSessOtp {
       width: 90%;
       margin: auto;
       display: flex;
@@ -524,7 +534,7 @@ const style = css`
       margin-top: 10px;
     }
     
-    #chatWin .overlayCon .logSessOTP .uSessOtp .otpInput{
+    #chatWin #overlayCon .logSessOTP .uSessOtp .otpInput{
       width: 10%;
       /* border: 2px solid rgba(0, 0, 0, 0.5); */
       padding: 4px;
@@ -537,7 +547,7 @@ const style = css`
       align-items: center; */
     }
 
-    #chatWin .overlayCon .opts .logSessOTP .btns{
+    #chatWin #overlayCon .opts .logSessOTP .btns{
       width: 100%;
       /* border: 2px solid red; */
       display: flex;
@@ -546,7 +556,7 @@ const style = css`
       margin: 10px 0px 30px;
     }
 
-    #chatWin .overlayCon .opts .logSessOTP .btns button{
+    #chatWin #overlayCon .opts .logSessOTP .btns button{
       width: 50%;
       background: #011935;
       border: none;
@@ -556,13 +566,13 @@ const style = css`
     }
 
 
-    #chatWin .overlayCon .logSessOTP .subDets {
+    #chatWin #overlayCon .logSessOTP .subDets {
       font-size: 12px;
       font-weight: 200;
       color: rgba(0,0,0, 0.8)
     }
 
-    #chatWin .overlayCon .logSessOTP .subDets b {
+    #chatWin #overlayCon .logSessOTP .subDets b {
       color: #011935;
       margin-left: 2px;
     }

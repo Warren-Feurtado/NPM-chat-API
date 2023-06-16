@@ -6,6 +6,7 @@ export class ChatFunctions {
   #socketService;
   visName;
   visEmail;
+  userOpt;
 
   /**
    * Constructs the function provider object
@@ -26,8 +27,9 @@ export class ChatFunctions {
     this.toPrevField = this.toPrevField(shadowRoot);
     this.otpKeydown = this.otpKeydown(shadowRoot);
     this.changeField = this.changeField(shadowRoot);
-    this.checkActive = this.checkActive(shadowRoot)
-    this.displayBoxC = this.displayBoxC(shadowRoot)
+    this.checkActive = this.checkActive(shadowRoot);
+    this.displayBoxC = this.displayBoxC(shadowRoot);
+    this.logSessResume = this.logSessResume(shadowRoot);
 
     this.otpInputs = ['', '', '', '', '', ''];  //FOR STORING OTP INPUT VALUES
     this.currIndex = 0;  //INDEX OF CURRENTLY FOCUSED OTP INPUT 
@@ -39,12 +41,15 @@ export class ChatFunctions {
       const chatIcon = shadowRoot.querySelector("#chatIcon");
       const chatWindow = shadowRoot.querySelector("#chatWin");
       const newMsg = shadowRoot.querySelector("#newMsg");
+      // const overlayCon = shadowRoot.querySelector("#overlayCon")
+
     
     if (chatWindow.classList.contains("hide")) {
       chatWindow.classList.remove("hide");
       chatWindow.classList.add("chat-open");
       chatIcon.classList.add("hide");
       closeIcon.classList.add("show");
+      // overlayCon.style.display = "none"
       this.#socketService.scrollToBottom(shadowRoot);
       // shadowRoot.querySelectorAll(`.otpInput`).setAttribute('disabled', 'true');
       shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).removeAttribute('disabled');
@@ -268,31 +273,107 @@ export class ChatFunctions {
    timeoutId; //Global variable
 
     startTimer() {
-    this.timeoutId = setTimeout(this.displayBoxC, 5000); // 5 seconds
-    console.log('start timer');
+    this.timeoutId = setTimeout(this.displayBoxC, 5000);
+    console.log('timer Started...') // 5 seconds
+    console.log("msgObj from service", this.#socketService.msgObj, "webpack working");
     }
 
     resetTimer() {
+      console.log('timer Reset....')
     clearTimeout(this.timeoutId);
     this.startTimer();
     }
 
     displayBoxC = (shadowRoot) => (event) =>{
-    shadowRoot.querySelector('.overlayCon').style.display = 'none';
+    let overlayCon = shadowRoot.querySelector('#overlayCon');
+    let welcome = shadowRoot.querySelector('.welcome');
+    let logSessExp = shadowRoot.querySelector(".logSessExp"); 
+    let guestSessExp = shadowRoot.querySelector(".guestSessExp"); 
+    let logSessOTP = shadowRoot.querySelector(".logSessOTP"); 
+    let msgObj =  this.#socketService.msgObj;
+    console.log("msgObj from service: ", msgObj);
+    // msgObj.visEmail = "ABC123@gmail.com";
+    // console.log("msgObj after assigning email: ", msgObj);
+
+      //getbutton events
+    // let affirmBtn = shadowRoot.querySelector('#affirm');
+    // let denyBtn = shadowRoot.querySelector('#deny');
+
+    // affirmBtn.addEventListener('click', (event) => { 
+    //   let clickedButton = event.target
+    //   console.log("button clicked", clickedButton);
+    // })
+    // denyBtn.addEventListener('click', (event) => {     
+    //   let clickedButton = event.target
+    //   console.log("button clicked", clickedButton);
+    // })
+
+    overlayCon.style.display = 'flex';
+    
+    if(msgObj.visEmail !== "") {     //placeholder
+      logSessExp.classList.remove('hide');
+      // guestSessExp.classList.add('') = 'none';
+      // logSessOTP.classList.add('') = 'none';
+      // if(this.userOtp === true) { //placeholder
+      //   logSessExp.style.display = 'none';
+      //   guestSessExp.style.display = 'none';
+      //   logSessOTP.style.display = 'block';
+      // } else {
+      //   overlayCon.style.display = 'none';
+      //   welcome.style.display = 'block';
+
+      //   //delete local storage uuid
+      // }
+    } else {
+      guestSessExp.classList.remove('hide');
+      //delete local storage uuid
+    }
     }
 
     checkActive = (shadowRoot) => (event) =>{
-      chatArea = shadowRoot.getElementById("chatWin")
-      chatArea.addEventListener('keydown', resetTimer);
-      chatArea.addEventListener('mousemove', resetTimer);
+      let chatArea = shadowRoot.getElementById("chatWin");
+
+      chatArea.addEventListener('keydown', this.resetTimer);
+      chatArea.addEventListener('mousemove', this.resetTimer);
       this.startTimer()
+    }
+
+    logSessResume = (shadowRoot) => () => {
+      //send OTP to server
+      //show OTP window
+      let logSessExp = shadowRoot.querySelector(".logSessExp"); 
+      let logSessOTP = shadowRoot.querySelector(".logSessOTP");
+      this.userOpt = true
+      console.log('yes clicked', this.userOpt);
+
+      //HIDE LOG-SESS-EXP
+      logSessExp.classList.remove('show');
+      logSessExp.classList.add('hide');
+
+      //DISPLAY LOG-SESS-OTP
+      logSessOTP.classList.remove('hide');
+      logSessOTP.classList.add('show');
+      
+      // this.#socketService.sendOtp();
+
+    }
+
+    sessEnd() {
+      this.userOpt = false
+      console.log('No clicked... Session Ended', this.userOpt);
     }
     
     // document.addEventListener('keydown', resetTimer);
     // document.addEventListener('mousemove', resetTimer);
     // startTimer();
     
-    
+    // handleButtonClick(event) {
+    //   // Get the button that was clicked
+    //   const clickedButton = event.target;
+      
+    //   // Log the button text
+    //   console.log(clickedButton.innerText);
+    // }
 
   
 }

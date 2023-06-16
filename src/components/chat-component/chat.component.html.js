@@ -107,20 +107,20 @@ const innerHtml =
                 </div>
             </div>
 
-            <div class="overlayCon">
+            <div id="overlayCon">
                 <div class="opts">
                     <!--first option: session timed out and user logged in-->
-                    <div class="logSessExp">
+                    <div class="logSessExp hide">
                         <p class="title">Session Expired </p>
                         <p class="headline">  Your Session has expired because of inactivity for over 10 mins. Would You Like to Continue ?</p>
                         <div class="btns">
-                            <button>Yes</button>
-                            <button>No</button>
+                            <button id="affirm" @click="${chatFunctions.logSessResume}">Continue</button>
+                            <button id="deny" @click="${chatFunctions.sessEnd}">End Chat</button>
                         </div>
                     </div>
 
                     <!--second option: session timed out and user not logged in-->
-                    <div class="guestSessExp">
+                    <div class="guestSessExp hide">
                         <p class="title">Session Expired </p>
                         <p class="headline">  Your Session has expired because of <br> inactivity for over 10 mins </p>
                         <div class="btns">
@@ -134,7 +134,7 @@ const innerHtml =
                     </div>
 
                     <!--third option: OTP for logged in user-->
-                    <div class="logSessOTP"> 
+                    <div class="logSessOTP hide"> 
                         
                         <form id="otpForm" @input="${chatFunctions.evPrev}">
                             <p class="title">OTP Verification</p>

@@ -10,7 +10,8 @@ export class SocketService {
     convoID;
     msgObj = {
         visName: '',
-        visEmail: '',
+        // visEmail: "ABC123@gmail.com",
+        visEmail: "",
         message: '',
         token: '',
         conversationID: ''
