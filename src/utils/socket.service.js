@@ -10,8 +10,8 @@ export class SocketService {
     convoID;
     msgObj = {
         visName: '',
-        // visEmail: "ABC123@gmail.com",
-        visEmail: "",
+        visEmail: "ABC123@gmail.com",
+        // visEmail: "",
         message: '',
         token: '',
         conversationID: ''
@@ -306,6 +306,52 @@ export class SocketService {
         var chatWindow = shadowRoot.querySelector(".chat_body");
         chatWindow.scrollTop = chatWindow.scrollHeight;
         console.log("reading shadowroot");
+    }
+
+
+    // FileUpload
+    /**
+     * @param {File} file
+     */
+    
+    fileUpload(file) {
+        const fileType = file.name.split('.').pop();
+        let types = [
+            'pdf',
+            'jpg',
+            'jpeg',
+            'png',
+            'docx',
+            'doc',
+            'txt',
+            'webp',
+            // 'mp3',
+            // 'mp4',
+            // 'mkv',
+            // 'ppt',
+            // 'pptx',
+            // 'zip',
+            // 'rar',
+            // 'wma',
+        ];
+        if (!fileType) {
+        console.error('No file extension provied');
+        return;
+        }
+        if (!types.includes(fileType)) {
+        console.error('File type invalid');
+        return;
+        }
+
+        let fileObj = {
+            file,
+            token: localStorage.getItem('aclUD'),
+            conversationID: this.convoID
+        }
+
+        
+        this.compNSP.emit('fileData', fileObj);
+        console.log('file data sent to server: ', fileObj);
     }
 
 }

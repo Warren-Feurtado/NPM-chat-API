@@ -7,6 +7,7 @@ export class ChatFunctions {
   visName;
   visEmail;
   userOpt;
+  otpInputs = ['', '', '', '', '', ''];  //FOR STORING OTP INPUT VALUES
 
   /**
    * Constructs the function provider object
@@ -30,8 +31,11 @@ export class ChatFunctions {
     this.checkActive = this.checkActive(shadowRoot);
     this.displayBoxC = this.displayBoxC(shadowRoot);
     this.logSessResume = this.logSessResume(shadowRoot);
+    this.attatchFile = this.attatchFile(shadowRoot);
+    this.upload = this.upload(shadowRoot);
+    
 
-    this.otpInputs = ['', '', '', '', '', ''];  //FOR STORING OTP INPUT VALUES
+    // this.otpInputs = ['', '', '', '', '', ''];  //FOR STORING OTP INPUT VALUES
     this.currIndex = 0;  //INDEX OF CURRENTLY FOCUSED OTP INPUT 
   }
   
@@ -57,7 +61,7 @@ export class ChatFunctions {
       // shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).style.border="2px solid darkblue";
       shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.remove("otpInputdisbl");
       shadowRoot.querySelector(`.otpInput:nth-child(${this.currIndex + 1})`).classList.add("otpInputActv");
-      this.startTimer();
+      // this.startTimer();
       
     } 
     else if (chatWindow.classList.contains("chat-open")) {
@@ -202,7 +206,7 @@ export class ChatFunctions {
     welcomeBox.classList.add('hide');
     chatBoxArea.classList.remove('hide');
     chatBoxArea.classList.add('show');
-    this.addId()
+    // this.addId()
   }
 
 
@@ -264,9 +268,10 @@ export class ChatFunctions {
   }
 
   verifyOtp(event) {
-    this.evPrev(event);
-    const otp = this.otpInputs.join('');
-    console.log('otp ready for verification: ', otp);
+    // this.evPrev();
+    event.preventDefault();
+    // const otp = this.otpInputs.join('');
+    console.log('otp ready for verification: ', this.otpInputs);
   }
 
     //EXAMPLE THAT THEY GAVE
@@ -362,18 +367,21 @@ export class ChatFunctions {
       this.userOpt = false
       console.log('No clicked... Session Ended', this.userOpt);
     }
+
+    attatchFile = (shadowRoot) => (event) => {
+      let fileInpt = shadowRoot.querySelector('.fileInpt');
+      // let paperClip = shadowRoot.querySelector('.paperClip');  
+
+      fileInpt.click();
+    }
+
+    // File upload`
+    upload = (shadowroot) => (event) => {
+      console.log('upload event triggered!: ', event.target.files[0]);
+      this.#socketService.fileUpload(event.target.files[0]);
+    }
     
-    // document.addEventListener('keydown', resetTimer);
-    // document.addEventListener('mousemove', resetTimer);
-    // startTimer();
-    
-    // handleButtonClick(event) {
-    //   // Get the button that was clicked
-    //   const clickedButton = event.target;
-      
-    //   // Log the button text
-    //   console.log(clickedButton.innerText);
-    // }
+  
 
   
 }
