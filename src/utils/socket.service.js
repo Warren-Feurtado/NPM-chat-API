@@ -10,8 +10,8 @@ export class SocketService {
     convoID;
     msgObj = {
         visName: '',
-        visEmail: "ABC123@gmail.com",
-        // visEmail: "",
+        // visEmail: "ABC123@gmail.com",
+        visEmail: "",
         message: '',
         token: '',
         conversationID: ''
@@ -57,6 +57,7 @@ export class SocketService {
             
             this.compNSP.on('visitor:reconnect', (reconData) => {
                 this.convoID = reconData.client.conversations[0]._id;
+
                 this.msgHistory = reconData.client.conversations[0].messages;
                 // console.log('reconnect data from Server', this.msgHistory);
                 console.log('reconnect data from Server', reconData);
@@ -64,7 +65,7 @@ export class SocketService {
 
                 // DISPLAY AGENT NAME IN TOP SECTION OF MESSAGE WINDOW
                 let agentNm = shadowRoot.querySelector('#agentNm');
-                agentNm.textContent = reconData.agent;
+                agentNm.textContent = `${reconData.client.conversations[0].agent.first_name} ${reconData.client.conversations[0].agent.last_name}`;
 
                 let welcScrn = shadowRoot.querySelector('.welcome');
                 let msgWindow = shadowRoot.querySelector('#chatBoxArea')
@@ -87,7 +88,7 @@ export class SocketService {
                         let message = document.createElement("p");
       
                         // let username = reconData.client.name;
-                        let username = 'Guest'
+                        let username = `${reconData.client.firstName}${reconData.client.lastName} `;
                         sender.textContent = username;
                         uTag.textContent =  username.split("")[0];
 
@@ -119,9 +120,9 @@ export class SocketService {
                         let agentNm = shadowRoot.querySelector('#agentNm');
 
                         // let username = reconData.agent.name;
-                        let username = 'Agent';
+                        let username = agentNm.textContent;
                         agentNm.textContent = username;
-                        sender.textContent = username;
+                        sender.textContent = username.split(" ")[0];
                         uTag.textContent =  username.split("")[0]
                         
                         msgDisplay.appendChild(listCon);
@@ -149,14 +150,14 @@ export class SocketService {
 
             this.compNSP.on('visitor:saved', (convoID) => {
                 console.log('new convo started...', convoID);
-                this.convoID = convoID;
+                this.convoID = convoID.conversationId;
             })
 
             this.compNSP.on('visitor:agent_connected', (data) => {
                 console.log('agent connect data: ', data);
 
                 let agentNm = shadowRoot.querySelector('#agentNm');
-                agentNm.textContent = data;
+                agentNm.textContent = `${data.agent_firstname} ${data.agent_lastname}`;
             })
 
             this.compNSP.on('visitor:new_message', (msgObj) => {
@@ -274,7 +275,7 @@ export class SocketService {
         //     conversationID: this.convoID
         // }
 
-        if(this.msgObj.visName != "" && this.msgObj.visEmail != "") {
+        if(this.msgObj.visName != "" || null && this.msgObj.visEmail != "" || null) {
             this.msgObj = {
                 visName: this.msgObj.visName,
                 visEmail: this.msgObj.visEmail,
@@ -282,6 +283,7 @@ export class SocketService {
                 token: localStorage.getItem('aclUD'),
                 conversationID: this.convoID
             }
+            console.log("visname given", this.mgObj);
         } else {
 
             this.msgObj = {
@@ -293,11 +295,14 @@ export class SocketService {
             this.compNSP.on('visitor:guest_name', (gstNm) => {
                 console.log('Server generated guest name', gstNm);
             });
+
+            console.log("visname not given", this.mgObj);
+
         }
         this.compNSP.emit('visitor:message', this.msgObj);
         console.log('new message object out: ', this.msgObj);
-        this.msgObj.name = "";
-        this.msgObj.email = ""; 
+        this.msgObj.visName = "";
+        this.msgObj.visEmail = ""; 
 
     }
 
@@ -315,7 +320,10 @@ export class SocketService {
      */
     
     fileUpload(file) {
+        const fileName = file.name.split('.')[0];
+        console.log('filename: ', fileName)
         const fileType = file.name.split('.').pop();
+        
         let types = [
             'pdf',
             'jpg',
@@ -344,7 +352,11 @@ export class SocketService {
         }
 
         let fileObj = {
-            file,
+            file: {
+                file,
+                fileName,
+                fileType
+            },
             token: localStorage.getItem('aclUD'),
             conversationID: this.convoID
         }

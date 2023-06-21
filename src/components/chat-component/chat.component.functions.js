@@ -86,6 +86,18 @@ export class ChatFunctions {
     }
   };
 
+  //FOR THE USERS WHO CHOOSE TO LOG IN AS A GUEST
+  guestLogin = (shadowRoot) => (event) => {
+    let welcomeBox = shadowRoot.querySelector(".welcome")
+    let chatBoxArea = shadowRoot.querySelector("#chatBoxArea")
+
+    welcomeBox.classList.add('hide');
+    chatBoxArea.classList.remove('hide');
+    chatBoxArea.classList.add('show');
+    // this.addId()
+
+  }
+
   validateEmail = (shadowRoot) => (event) => {
     event.preventDefault();
 
@@ -117,7 +129,7 @@ export class ChatFunctions {
       //   email:userEmail.value
       // };
 
-      // this.#socketService.storeUser(userName.value, userEmail.value);
+      this.#socketService.storeUser(userName.value, userEmail.value);
 
       // this.#socketService.newVis(user);
       // chatBoxArea.classList.add('show')
@@ -194,19 +206,6 @@ export class ChatFunctions {
     console.log("UD before removal",  aclUD)
     localStorage.removeItem('aclUD');
     console.log("removed UD", aclUD);
-  }
-
-  
-
-  //FOR THE USERS WHO CHOOSE TO LOG IN AS A GUEST
-  guestLogin = (shadowRoot) => (event) => {
-    let welcomeBox = shadowRoot.querySelector(".welcome")
-    let chatBoxArea = shadowRoot.querySelector("#chatBoxArea")
-
-    welcomeBox.classList.add('hide');
-    chatBoxArea.classList.remove('hide');
-    chatBoxArea.classList.add('show');
-    // this.addId()
   }
 
 
